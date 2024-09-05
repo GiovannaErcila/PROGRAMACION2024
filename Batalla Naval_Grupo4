@@ -1,0 +1,85 @@
+import random
+
+# Tamaño del tablero
+TAMANIO = 5
+
+# Crear tablero vacío
+def crear_tablero():
+    return [[' ' for _ in range(TAMANIO)] for _ in range(TAMANIO)]
+
+# Colocar barcos aleatoriamente
+def colocar_barcos(tablero, num_barcos):
+    for _ in range(num_barcos):
+        while True:
+            x, y = random.randint(0, TAMANIO-1), random.randint(0, TAMANIO-1)
+            if tablero[x][y] == ' ':
+                tablero[x][y] = 'B'
+                break
+
+# Mostrar tablero (ocultando los barcos del oponente)
+def mostrar_tablero(tablero, ocultar=False):
+    print("  " + " ".join(str(i) for i in range(TAMANIO)))
+    for i, fila in enumerate(tablero):
+        print(f"{i} ", end="")
+        for celda in fila:
+            if ocultar and celda == 'B':
+                print(' ', end=" ")
+            else:
+                print(celda, end=" ")
+        print()
+
+# Realizar un disparo
+def disparar(tablero, x, y):
+    if tablero[x][y] == 'B':
+        tablero[x][y] = 'X'
+        return True
+    elif tablero[x][y] == ' ':
+        tablero[x][y] = 'O'
+    return False
+
+# Verificar si todos los barcos han sido hundidos
+def todos_hundidos(tablero):
+    return all(celda != 'B' for fila in tablero for celda in fila)
+
+# Juego principal
+def jugar():
+    tablero_jugador = crear_tablero()
+    tablero_computadora = crear_tablero()
+
+    colocar_barcos(tablero_jugador, 3)
+    colocar_barcos(tablero_computadora, 3)
+
+    turno = 0
+    while True:
+        print("\nTu tablero:")
+        mostrar_tablero(tablero_jugador)
+        print("\nTablero de la computadora:")
+        mostrar_tablero(tablero_computadora, ocultar=True)
+
+        if turno % 2 == 0:
+            print("\nTu turno")
+            x = int(input("Ingresa la fila (0-4): "))
+            y = int(input("Ingresa la columna (0-4): "))
+            if disparar(tablero_computadora, x, y):
+                print("¡Impacto!")
+            else:
+                print("Agua")
+
+            if todos_hundidos(tablero_computadora):
+                print("¡Ganaste!")
+                break
+        else:
+            print("\nTurno de la computadora")
+            x, y = random.randint(0, TAMANIO-1), random.randint(0, TAMANIO-1)
+            if disparar(tablero_jugador, x, y):
+                print(f"La computadora impactó en ({x}, {y})")
+            else:
+                print(f"La computadora falló en ({x}, {y})")
+
+            if todos_hundidos(tablero_jugador):
+                print("La computadora ganó")
+                break
+
+        turno += 1
+
+jugar()
