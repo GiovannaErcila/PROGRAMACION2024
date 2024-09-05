@@ -1,0 +1,47 @@
+# Importo el módulo array.
+import array
+
+# Ventas mensuales del producto específico. Creo el arreglo.
+ventas_mensuales = array.array('i', [120, 135, 150, 145, 160, 155, 130, 140, 125, 170, 160, 180])
+# Calcular la venta total anual.
+total_anual = sum(ventas_mensuales)
+
+# Mostrar el total anual de ventas.
+print(f"Venta total anual: {total_anual} unidades")
+# Calcular el promedio de ventas mensuales.
+# Ventas mensuales del producto específico
+ventas_mensuales = array.array('i', [120, 135, 150, 145, 160, 155, 130, 140, 125, 170, 160, 180])
+
+# Calcular la venta total anual, suma todas las ventas.
+total_anual = sum(ventas_mensuales)
+
+# Contar el número de meses (12 meses)
+numero_meses = len(ventas_mensuales)
+
+# Calcular el promedio de ventas mensuales, por el número de meses.
+promedio_mensual = total_anual / numero_meses
+
+# Mostrar el promedio mensual, con dos decimales.
+print(f"Promedio de ventas mensuales: {promedio_mensual:.2f} unidades")
+
+# Encontrar el índice de la venta más baja y más alta
+indice_venta_baja = ventas_mensuales.index(min(ventas_mensuales))
+indice_venta_alta = ventas_mensuales.index(max(ventas_mensuales))
+
+# Obtener las ventas más baja y más alta
+venta_baja = ventas_mensuales[indice_venta_baja]
+venta_alta = ventas_mensuales[indice_venta_alta]
+
+# Obtener los nombres de los meses (asumiendo que los meses están indexados del 0 al 11)
+meses = [
+    "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", 
+    "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+]
+
+# Obtener los nombres de los meses correspondientes
+mes_venta_baja = meses[indice_venta_baja]
+mes_venta_alta = meses[indice_venta_alta]
+
+# Mostrar el resultado
+print(f"El mes con la venta más baja es {mes_venta_baja} con {venta_baja} unidades.")
+print(f"El mes con la venta más alta es {mes_venta_alta} con {venta_alta} unidades.")
