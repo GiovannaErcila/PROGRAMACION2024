@@ -1,0 +1,24 @@
+# Algoritmo MCD. Implementar una función que calcule el Máximo Común Divisor de dos números utilizando el algoritmo de Euclides.
+def mcd(a,b):
+  while b != 0:
+      a, b = b, a % b
+  return a
+
+# Ejemplo:
+numero1 = 38
+numero2 = 28
+resultado = mcd(numero1, numero2)
+print(f"El MCD de {numero1} y {numero2} es: {resultado}")
+    
+
+# Algoritmo de Euclides:
+# Se toma el residuo de la división de a por b.
+# Se asigna el valor de b a a, y el residuo obtenido a b.
+# Este proceso se repite hasta que el residuo (b) sea 0.
+# Cuando b es 0, el valor de a en ese punto es el MCD.
+# Por ejemplo, para a = 38 y b = 28:
+# 38 % 28 = el residuo es 10
+# 28 % 10 = el residuo es 8
+# 10 % 8 = el residuo es 2
+# 8 % 2 = el residuo es 0
+# El MCD es 2.
