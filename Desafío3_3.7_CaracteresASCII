@@ -1,0 +1,9 @@
+# Muestra de caracteres ASCII, correspondientes a una lista de números.
+# Uso de la función chr() para convertir los números en caracteres.
+
+# Lista de números.
+numeros = [73, 78, 70, 79, 105, 110, 102, 111]
+# Convertir cada número en código ASCII.
+caracteres = [chr(numeros) for numeros in numeros]
+# Imprimir los caracteres. 
+print(caracteres)
