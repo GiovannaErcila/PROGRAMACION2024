@@ -1,0 +1,16 @@
+# Lista de notas de 15 estudiantes.
+calificaciones = [9, 5, 7, 8, 6, 4, 11, 3, 2, 8, 7, 7, 4, 9, 10]
+# Usamos 2 contadores para abrobados y desaprobados.
+aprobatoria = 0
+desaprobatoria = 0
+
+# Iteramos sobre cada una de las calificaciones mostradas en la lista.
+for calificacion in calificaciones:
+  if calificacion >= 7:
+    aprobatoria += 1
+  else:
+    desaprobatoria += 1
+
+# Imprimimos el resultado.
+print(" Cantidad de estudiantes que aprobaron: ", aprobatoria)
+print("Cantidad de estudiantes que desaprobaron:", desaprobatoria)
