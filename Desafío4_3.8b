@@ -14,12 +14,12 @@ def graficarDatos(data):
     # Separar los datos en dos listas: palabras y frecuencias
     words, frequencies = zip(*data)
 
-    # Crear la gráfica de barras con 10 pulgadas de ancho y 6 de alto 
-    plt.figure(figsize=(10, 6))
-    plt.bar(words, frequencies, color='skyblue')
+    # Crear la gráfica de barras con 15 pulgadas de ancho y 10 de alto 
+    plt.figure(figsize=(15, 10))
+    plt.bar(words, frequencies, color='green')
 
     # Añadir título y etiquetas
-    plt.title('Frecuencia de palabras')
+    plt.title('Frecuencia')
     plt.xlabel('Palabras')
     plt.ylabel('Frecuencia')
 
