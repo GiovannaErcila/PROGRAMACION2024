@@ -1,0 +1,66 @@
+# Desafío 1: Gestión del Stock de la verdulería. 
+# Inventario inicial
+
+inventario = ["manzanas", "bananas", "zanahorias", "espinacas", "brocoli", "cebolla", "kiwis"]
+# Pregunta 1: ¿Cuántos tipos de productos hay en el inventario inicial?
+# Para saber cuantos productos hay usamos el método len, que determina la longitud de un arrey.
+cantidad_productos = len(inventario)
+print(f"Hay {cantidad_productos} tipos de productos en el inventario inicial.")
+# Hay 7 productos en el invenario inicial.
+  
+# Pregunta 2: ¿Qué producto está en la tercera posición del inventario?
+# Para saber cuál producto está en la tercera posición del inventario usamos el método index, que muestra el número de índice del primer elemento con un valor determinado.
+producto_tercera_posicion = inventario[2]
+print(f"El producto en la tercera posición del inventario es {producto_tercera_posicion}.")
+# El producto en la tercera posición es zanahorias. 
+# Un cliente compra todas las bananas
+inventario.remove("bananas")
+
+# Pregunta 3: ¿Cómo actualizarías el inventario después de la venta?
+print("Inventario actualizado:", inventario)
+ # Nuevos productos: "frutillas", "apio" y "papas".
+# Pregunta 4: ¿Cómo añadirías estos productos al inventario?
+nuevos_productos = ["frutillas", "apio", "papas"]
+inventario.extend(nuevos_productos)
+print("Inventario actualizado:", inventario)
+
+# Pregunta 5: ¿Cómo verificarías si las "papas" están en el inventario?
+# Para verificar si un elemento está en un arreglo uso if y else.
+if "papas" in inventario:
+  print(" Las papas se encuentran en el inventario.")
+else:
+  print("Las papas no se encuentran en el inventario.")
+  
+# Fruta "dragonfruit", pero sólo hay espacio para 7 productos
+# Pregunta 6: ¿Cómo decidirias que producto sacar para hacer espacio para esta nueva fruta?
+# Elimino el último producto.
+inventario.pop()
+print("Inventario actualizado:", inventario)
+# Se eliminó papas que fue el último elemento agregado.
+# Agrego el nuevo producto.
+inventario.append("dragonfruit")
+print("Inventario actualizado:", inventario)
+# Se corre el programa y se ve dragonfruit.
+# Verifico si hay 7 productos en el inventario.
+while len(inventario) > 7:
+  inventario.pop()
+  # Muestro el inventario actualizado.
+print("Inventario actualizado:", inventario)
+
+# El inventario actualizado me muestra 7 productos finales. Aunque la fruta rara se agregó no la muestra como dentro del producto final. 
+# Pregunta 7: Ordenar el inventario alfabéticamente. 
+# Para ordenar alfabéticamente uso el método sort()
+inventario.sort()
+# Lo muestro.
+print("Inventario ordenado alfabéticamente:", inventario)
+
+# Un empleado necesita una copia nueva del inventario. 
+# Pregunta 8: ¿Cómo hago una copia para que el empleado si la modifica, el inventario original no se vea modificado?
+# Uso el método copy() y luego verifico si los inventarios son iguales o no.
+# Creo una copia para el empleado.
+inventario_empleado = inventario.copy()
+# Si el nuevo empleado hiciera cambios por ejemplo agrega "uvas"
+inventario_empleado.append("uvas")
+# Muestro el original y la copia.
+print("Inventario original:", inventario)
+print("Inventario empleado:", inventario_empleado)
