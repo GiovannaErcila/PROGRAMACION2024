@@ -1,0 +1,9 @@
+# Pedir al usuario nombre y ciudad de origen
+# input devuelve los datos ingresados como una cadena de texto.
+nombre = input("Introduce tu nombre: ")
+ciudad = input("Introduce tu ciudad de origen: ")
+
+# Saludo
+# format, incrusta variables dentro de la cadena de texto
+# {} remplaza las variables nombre y ciudad.
+print("Hola, mi nombre es {} y soy de {}".format(nombre, ciudad))
