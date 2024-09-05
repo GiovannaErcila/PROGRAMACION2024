@@ -1,0 +1,21 @@
+# Pedir al usuario que ingrese dos números
+# indicamos los dos números usando la función de conversión de tipos float
+numero1 = float(input("Introduce un número: ")) 
+numero2 = float(input("Introduce otro número: "))
+
+# imprimir suma, resta, multiplicación y división de esos números
+suma = numero1 + numero2
+resta = numero1 - numero2
+multiplicacion = numero1 * numero2
+
+# Se debe de verificar si el segundo número que ingresamos es diferente de cero. Luego se realiza la división.
+if numero2 != 0:
+    division = numero1 / numero2
+else:
+    division = "No es posible dividir por cero"
+
+# Imprimir resultados en la pantalla
+print("La suma es:", suma)
+print("La resta es:", resta)
+print("La multiplicación es:", multiplicacion)
+print("La división es:", division)
