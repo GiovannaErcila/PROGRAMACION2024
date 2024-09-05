@@ -1,0 +1,16 @@
+# Palíndromo. 
+# Crea una función llamada es_palindromo que tome una cadena y devuelva true si es palíndromo y false si no lo es. 
+def es_palindromo(cadena):
+  cadena = cadena.lower() # Convertir a minúsculas
+  cadena = cadena.replace(" ", "") # convertimos la cadena a minúsculas y eliminamos los espacios en blanco
+  return cadena == cadena[::-1] # comparamos la cadena original con su reverso
+  
+# Ejemplo:
+texto = "Giovanna lava la cosina"
+resultado = es_palindromo(texto)
+print(f"¿Es '{texto}' un palíndromo?: {resultado}") # en este caso devolverá Falso.
+
+# Ejemplo:
+texto = "Somos o no somos"
+resultado = es_palindromo(texto)
+print(f"¿Es '{texto}' un palíndromo?: {resultado}") # en este caso devolverá verdadero.
