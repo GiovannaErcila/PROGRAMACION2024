@@ -1,0 +1,27 @@
+suma_calificaciones = 0
+contador_asignaturas = 0
+
+# Pedimos al usuario que ingrese las calificaciones separadas por coma.
+calificaciones_string = input("Ingrese todas las calificaciones separadas por comas: ")
+# Se convierte la cadena de calificaciones en números enteros. 
+calificaciones = [int(calificacion) for calificacion in calificaciones_string.split(",")]
+# Iteramos sobre cada calificación.
+for calificacion in calificaciones:
+    if calificacion == 0:
+        break
+
+    if calificacion < 1 or calificacion > 12:
+        print("La calificación debe estar entre 1 y 12. Inténtelo de nuevo.")
+        continue
+
+    suma_calificaciones += calificacion
+    contador_asignaturas += 1
+
+# Promedio
+if contador_asignaturas > 0:
+    promedio = suma_calificaciones / contador_asignaturas
+    print(f"El promedio de las calificaciones es: {promedio}")
+else:
+    print("No se ingresaron calificaciones válidas.")
+  
+
