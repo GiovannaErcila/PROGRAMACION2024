@@ -1,0 +1,35 @@
+def generar_factura(productos):
+  total = 0
+
+  # Imprimir encabezado de la factura
+  print("********** Factura **********")
+  print("Nombre\tCantidad\tPrecio\tTotal")
+  print("----------------------------------")
+
+  # Iterar sobre cada producto en la lista
+  for producto in productos:
+      nombre = producto["nombre"]
+      cantidad = producto["cantidad"]
+      precio = producto["precio"]
+      subtotal = cantidad * precio
+
+      # Imprimir detalles de cada producto
+      print(f"{nombre}\t{cantidad}\t\t{precio}\t{subtotal}")
+
+      # Calcular el total de la factura
+      total += subtotal
+
+  # Imprimir total de la factura
+  print("----------------------------------")
+  print(f"Total:\t\t\t\t{total}")
+  print("******************************")
+
+# Ejemplo de lista de productos
+productos = [
+  {"nombre": "Producto 1", "cantidad": 2, "precio": 10},
+  {"nombre": "Producto 2", "cantidad": 1, "precio": 20},
+  {"nombre": "Producto 3", "cantidad": 3, "precio": 15}
+]
+
+# Llamar a la función para generar la factura
+generar_factura(productos)
