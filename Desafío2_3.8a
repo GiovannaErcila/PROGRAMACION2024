@@ -1,0 +1,9 @@
+# Diseña una función que tome una cadena y devuelva la misma cadena, pero con el primer carácter de cada palabra en mayúsculas.
+
+def capitalizar_palabras(cadena): # capitalizar: devuelve una copia de la cadena con la primera letra en mayúsculas.
+  return cadena.title() # title: convierte la primera letra de cada palabra de una cadena a mayúsculas.
+
+# Ejemplo:
+texto = "hola giovanna, que lindo día."
+resultado = capitalizar_palabras(texto)
+print(resultado)
