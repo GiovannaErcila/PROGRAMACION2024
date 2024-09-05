@@ -1,0 +1,42 @@
+# comprueba si un número es múltiplo de otro
+num = int(input("Escribe un numero: "))
+# condicional, if numero resto de la división entre 2, es igual a 0. Es verdadero si el 
+# número dado por el usuario es múltiplo de 2. 
+# De lo contrario, es falso.
+# Para los demás números se realiza el mismo paso. 
+if num % 2 == 0: 
+  
+  print("¿Es múltiplo de 2? Sí")
+else:
+  print("¿Es múltiplo de 2? No")
+
+if num % 3 == 0:
+  print("¿Es múltiplo de 3? Sí")
+else:
+  print("¿Es múltiplo de 3? No")
+
+if num % 5 == 0:
+  print("¿Es múltiplo de 5? Sí")
+else:
+  print("¿Es múltiplo de 5? No")
+
+if num % 7 == 0:
+  print("¿Es múltiplo de 7? Sí")
+else:
+  print("¿Es múltiplo de 7? No")
+
+if num % 9 == 0:
+  print("¿Es múltiplo de 9? Sí")
+else:
+  print("¿Es múltiplo de 9? No")
+
+if num % 10 == 0:
+  print("¿Es múltiplo de 10? Sí")
+else:
+  print("¿Es múltiplo de 10? No")
+
+if num % 11 == 0:
+  print("¿Es múltiplo de 11? Sí")
+else:
+  print("¿Es múltiplo de 11? No")
+  
