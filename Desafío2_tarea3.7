@@ -1,0 +1,13 @@
+# lista original de códigos de los libros.
+codigos_libros = [1284, 1518,2332, 4114]
+# Uso sorted para ordenar la lista en orden decreciente, sin modificar la lista original.
+# reverse = True, invierte la lista de mayor a menor. 
+codigos_libros_ordenados = sorted(codigos_libros, reverse=True)
+# Imprimo la lista ordenada y la original.
+print("Lista de codigos de libros original:", codigos_libros)
+print("Lista de codigos de libros ordenados en orden decreciente:", codigos_libros_ordenados)
+
+# ¿Porqué es importante no modificar la lista original?
+# Es importante no modificar la lista para conservar los datos iniciales. Así se evitan errores en ella.
+# ¿Porqué no puedo usar el método sort sobre la lista original? 
+# El método sort modifica la lista original, no devuelve una nueva lista, por eso se usa sorted; para crear una nueva lista ordenada. 
