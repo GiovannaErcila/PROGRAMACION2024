@@ -1,0 +1,8 @@
+# Realizar conversiones de una temperatura dada en Celsius a Kelvin.
+# Convertir de Celsius a Kelvin.
+celsius = float(input("Introduce los grados celsius: "))
+# se crea la variable celsius, y usamos un dato flotante
+kelvin = celsius + 273.15
+# se crea la variable kelvin.
+print(f"{celsius} en grados celsius es {kelvin} en grados kelvin.")
+# Salida en pantalla de los grados kelvin.
