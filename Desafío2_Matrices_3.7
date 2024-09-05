@@ -1,0 +1,13 @@
+import numpy as np
+import matplotlib.pyplot as plt
+# Definir la matriz A
+A = np.array([[1, 0, 1],
+              [4, -1, 4],
+              [5, 6, 7]])
+# Calcular la inversa de A
+A_inv = np.linalg.inv(A) # Obtengo la inversa de la matriz
+# Calcular la traza de la matriz inversa
+traza_A_inv = np.trace(A_inv) # Obtengo la traza de la matriz
+print(f"La traza de la matriz inversa de A es: {traza_A_inv}")
+
+# La traza de la matriz inversa de A es: 15.00000000000002
