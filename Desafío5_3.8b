@@ -1,0 +1,44 @@
+# Utiliza el módulo os para interactuar con el SO y añade características como guardar un archivo o leer un archivo existente en nuestro procesador de texto.
+import os # Proporciona una forma de interactuar con el sistema operativo
+
+def save_file(filename, content):
+    # Guarda el contenido en un archivo especificado
+    with open(filename, 'w') as file:
+        file.write(content)
+    print(f"Archivo '{filename}' guardado exitosamente.")
+
+def read_file(filename):
+    # Lee el contenido de un archivo especificado
+    if os.path.exists(filename):
+        with open(filename, 'r') as file:
+            content = file.read()
+        print(f"Contenido del archivo '{filename}':\n{content}")
+    else:
+        print(f"El archivo '{filename}' no existe.")
+
+def list_files_in_directory(directory='.'):
+    # Lista los archivos en un directorio especificado (por defecto el actual)
+    files = os.listdir(directory)
+    print(f"Archivos en el directorio '{directory}':")
+    for file in files:
+        print(file)
+
+# Ejemplo de uso directo
+# Guardar un archivo
+save_file('mi_archivo.txt', 'Este es el contenido de mi archivo de texto.')
+
+# Leer un archivo
+read_file('mi_archivo.txt')
+
+# Listar archivos en el directorio actual
+list_files_in_directory()
+# Ejemplo de uso
+if __name__ == "__main__":
+    # Guardar un archivo
+    save_file('mi_archivo.txt', 'Este es el contenido de mi archivo de texto.')
+
+    # Leer un archivo
+    read_file('mi_archivo.txt')
+
+    # Listar archivos en el directorio actual
+    list_files_in_directory()
