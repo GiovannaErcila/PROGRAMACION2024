@@ -1,0 +1,24 @@
+# Calculadora de Fechas. 
+# Objetivo: Escribir un programa en Python que permita calcular la diferencia entre 2 fechas, utilizando el módulo datetime.
+from datetime import datetime # Se importa datetime desde el módulo datetime.
+
+def calcular_diferencia(fecha1_str, fecha2_str): # Convierte las cadenas de texto que representan las fechas en objetos datetime usando el método strptime().
+    # Definir el formato de la fecha. Ejemplo: "2024-09-07"
+    formato_fecha = "%Y-%m-%d" # Año-Mes-Día
+    
+    # Convertir las cadenas de texto a objetos datetime
+    fecha1 = datetime.strptime(fecha1_str, formato_fecha)
+    fecha2 = datetime.strptime(fecha2_str, formato_fecha)
+    
+    # Calcular la diferencia
+    diferencia = fecha2 - fecha1
+    
+    # Retornar la diferencia en días
+    return diferencia.days # Se retorna la diferencia en días utilizando el atributo .days.
+
+# Ejemplo de uso
+fecha1 = "2023-09-07"
+fecha2 = "2024-09-07"
+
+diferencia_dias = calcular_diferencia(fecha1, fecha2)
+print(f"La diferencia entre {fecha1} y {fecha2} es de {diferencia_dias} días.")
