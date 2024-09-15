@@ -1,0 +1,27 @@
+# Utiliza el módulo creado procesador_texto para resaltar recursivamente todas las ocurrencias de una palabra clave en un texto largo. 
+
+def resaltar_palabra(texto, palabra_clave, marcador="*"):
+    """
+    Resalta todas las ocurrencias de una palabra clave en el texto añadiendo
+    un marcador alrededor de la palabra clave.
+    :param texto: Texto donde se va a buscar la palabra clave.
+    :param palabra_clave: Palabra que se quiere resaltar.
+    :param marcador: Símbolo para resaltar la palabra clave (por defecto '*').
+    :return: Texto con todas las ocurrencias de la palabra clave resaltadas.
+    """
+    # Caso base: si no hay más ocurrencias de la palabra clave, devolver el texto tal cual
+    index = texto.lower().find(palabra_clave.lower())
+    if index == -1:
+        return texto
+    # Resaltar la palabra clave
+    resaltado = marcador + texto[index:index + len(palabra_clave)] + marcador
+    # Reconstruir el texto con la palabra resaltada y llamar recursivamente al resto del texto
+    return (texto[:index] + resaltado +
+            resaltar_palabra(texto[index + len(palabra_clave):], palabra_clave, marcador))
+# Ejemplo de uso
+if __name__ == "__main__":
+    texto_largo = """La recursión es una técnica poderosa en programación. 
+    Cuando entiendes la recursión, puedes resolver problemas complejos más fácilmente."""
+    palabra = "recursión"
+    resultado = resaltar_palabra(texto_largo, palabra)
+    print(resultado)
