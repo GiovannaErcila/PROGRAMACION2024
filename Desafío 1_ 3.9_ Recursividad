@@ -1,0 +1,17 @@
+# Definición de la función recursiva para calcular el MCD
+def mcd(a, b):
+    if b == 0:
+        return a
+    return mcd(b, a % b)
+
+# Ejemplo de uso con otros números
+num1 = 56
+num2 = 98
+resultado = mcd(num1, num2)
+print(f"El MCD de {num1} y {num2} es {resultado}")
+
+# En este caso, el MCD de 56 y 98 es 14. El cálculo sigue el mismo proceso del algoritmo de Euclides:
+# 98%56 = 42
+# 56%42=14
+# 42%14=0
+# Cuando el residuo es 0, el resultado es el último divisor no nulo, que es 14.
