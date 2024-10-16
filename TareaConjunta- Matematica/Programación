@@ -1,0 +1,96 @@
+import sys
+
+class Grafo:
+    def __init__(self, letras):    # Inicializa un grafo con una lista de letras como nodos.
+        
+        self.nodos = letras
+        self.num_nodos = len(letras) # Almacena el núemero de nodos, que se calcula con len (letras)
+        # Mapeo de letras a índices.
+        self.indices_nodos = {letra: i for i, letra in enumerate(letras)} 
+# Se crea un diccionario que mapea cada letra del nodo, a un índice numérico. 
+# enumerate(letras) asigna a cada letra (nodo) un índice numérico comenzando desde 0.
+# Inicializa la matriz de adyacencia con 'inf' para representar distancias infinitas.
+        self.matriz_adyacencia = [[sys.maxsize] * self.num_nodos for _ in range(self.num_nodos)] # Se inicializa la matriz de adyacencia para representar las distancias entre nodos.
+        for i in range(self.num_nodos): # Este bucle asegura que las entradas diagonales de la matriz de adyacencia sean 0. La distancia de un nodo a sí mismo siempre es cero, no se mueve.
+# self.num_nodos: Este valor representa el número total de nodos, y se utiliza tanto para la cantidad de filas como para la cantidad de columnas de la matriz.
+# sys.maxsize: Representa el valor de una distancia infinita (utilizado en el lugar donde no hay conexión entre dos nodos). 
+# sys.maxsize es una constante que representa el mayor número entero disponible en Python.
+# [[sys.maxsize] * self.num_nodos for _ in range(self.num_nodos)]: Se genera una matriz cuadrada de tamaño num_nodos x num_nodos, donde todas las entradas se inicializan a sys.maxsize (infinito), indicando que inicialmente no hay conexiones entre los nodos.
+            self.matriz_adyacencia[i][i] = 0  
+# El costo de ir a un mismo nodo es 0
+# Para cada nodo i, se asegura que la distancia desde ese nodo hacia sí mismo sea 0, modificando la diagonal principal de la matriz.
+
+    def agregar_arista(self, origen, destino, peso):
+        # Agrega una arista dirigida de un nodo origen a un nodo destino con un peso específico.
+        nodo_origen = self.indices_nodos[origen]
+        nodo_destino = self.indices_nodos[destino]
+        self.matriz_adyacencia[nodo_origen][nodo_destino] = peso
+
+    def mostrar_matriz(self):
+        # Imprime la matriz de adyacencia del grafo.
+        for fila in self.matriz_adyacencia:
+            print(fila)
+
+    def dijkstra(self, nodo_origen):
+        # Aplica el algoritmo de Dijkstra para encontrar el camino más corto desde el nodo de origen.
+        origen = self.indices_nodos[nodo_origen]
+        distancias = [sys.maxsize] * self.num_nodos
+        distancias[origen] = 0
+        visitado = [False] * self.num_nodos
+        predecesores = [-1] * self.num_nodos
+
+        for _ in range(self.num_nodos):
+            min_distancia = sys.maxsize
+            u = -1
+
+            for i in range(self.num_nodos):
+                if not visitado[i] and distancias[i] < min_distancia:
+                    min_distancia = distancias[i]
+                    u = i
+
+            visitado[u] = True
+
+            for v in range(self.num_nodos):
+                if (self.matriz_adyacencia[u][v] != sys.maxsize and
+                    not visitado[v] and
+                    distancias[u] + self.matriz_adyacencia[u][v] < distancias[v]):
+                    distancias[v] = distancias[u] + self.matriz_adyacencia[u][v]
+                    predecesores[v] = u
+
+        self.mostrar_resultado_dijkstra(nodo_origen, distancias, predecesores)
+
+    def mostrar_resultado_dijkstra(self, nodo_origen, distancias, predecesores):
+        # Muestra los resultados del algoritmo de Dijkstra: camino y costo a cada nodo.
+        print(f"Resultados de Dijkstra desde el nodo {nodo_origen}:")
+        for nodo_destino in range(self.num_nodos):
+            if distancias[nodo_destino] == sys.maxsize:
+                print(f"No hay camino desde {nodo_origen} a {self.nodos[nodo_destino]}.")
+            else:
+                camino = []
+                actual = nodo_destino
+                while actual != -1:
+                    camino.insert(0, self.nodos[actual])
+                    actual = predecesores[actual]
+                print(f"Camino más corto a {self.nodos[nodo_destino]}: {camino} con un costo de {distancias[nodo_destino]}")
+
+# Crear un grafo con nodos representados por letras
+nodos = ['A', 'B', 'C', 'D', 'E', 'F']
+grafo = Grafo(nodos)
+
+# Definir las aristas con sus respectivos pesos
+grafo.agregar_arista('A', 'B', 7)
+grafo.agregar_arista('A', 'C', 9)
+grafo.agregar_arista('A', 'F', 14)
+grafo.agregar_arista('B', 'C', 10)
+grafo.agregar_arista('B', 'D', 15)
+grafo.agregar_arista('C', 'D', 11)
+grafo.agregar_arista('C', 'F', 2)
+grafo.agregar_arista('D', 'E', 6)
+grafo.agregar_arista('E', 'F', 9)
+
+# Mostrar la matriz de adyacencia
+grafo.mostrar_matriz()
+
+# Ejecutar el algoritmo de Dijkstra desde el nodo 'A'
+grafo.dijkstra('A')
+
