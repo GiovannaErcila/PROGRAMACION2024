@@ -1,0 +1,28 @@
+import math
+
+class Figura:
+    def area(self):
+        raise NotImplementedError("Subclases deben implementar este método") # area: Este método es un método abstracto. 
+# Al levantar una excepción NotImplementedError, obligamos a las subclases a implementar su propia versión del método area.
+
+class Circulo(Figura):
+    def __init__(self, radio):  
+        self.radio = radio
+# __init__: Inicializan los atributos específicos de cada figura (radio y lado, respectivamente).
+    def area(self):
+        return math.pi * self.radio**2
+# area: Sobrescriben el método area de la clase base para calcular el área correspondiente a cada figura.
+class Cuadrado(Figura):
+    def __init__(self, lado):
+        self.lado = lado
+
+    def area(self):
+        return self.lado**2
+
+# Uso del polimorfismo: Creamos una lista figuras que contiene objetos de tipo Circulo y Cuadrado.
+# Iteramos sobre la lista y llamamos al método area() para cada figura.
+figuras = [Circulo(5), Cuadrado(4)]
+for figura in figuras:
+    print(f"El área de la figura es: {figura.area()}")
+
+# A pesar de que todas las figuras tienen un método llamado area(), el comportamiento real del método depende del tipo de objeto (círculo o cuadrado). 
