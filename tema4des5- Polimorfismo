@@ -1,0 +1,24 @@
+class Operacion:  
+    def resultado(self):   # resultado: Este método es abstracto, obligando a las subclases a implementar su propia versión del método resultado.
+        raise NotImplementedError("Subclases deben implementar este método")
+
+class Suma(Operacion):
+    def __init__(self, a, b):  # __init__: Inicializan los atributos a y b necesarios para cada operación.
+        self.a = a
+        self.b = b
+
+    def resultado(self):  # resultado: Sobrescriben el método resultado para realizar la operación correspondiente (suma o multiplicación).
+        return self.a + self.b
+
+class Multiplicacion(Operacion):
+    def __init__(self, a, b):
+        self.a = a
+        self.b = b
+
+    def resultado(self):
+        return self.a * self.b
+
+# Uso del polimorfismo: Creamos una lista operaciones que contiene objetos de tipo Suma y Multiplicacion.
+operaciones = [Suma(3, 4), Multiplicacion(5, 2)]
+for operacion in operaciones:
+    print(f"El resultado de la operación es: {operacion.resultado()}")   # Iteramos sobre la lista y llamamos al método resultado() para cada operación.
