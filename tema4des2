@@ -1,0 +1,22 @@
+class Autor:
+    def __init__(self, nombre):  # Se agrega un método __init__ para inicializar el atributo nombre.
+        self.nombre = nombre
+
+    def biografía(self): # El método biografía proporciona una descripción general de un autor.
+        print(f"Soy {self.nombre}, un autor.")
+
+class Escritor(Autor):  # Hereda de la clase Autor.
+    def __init__(self, nombre, genero):  # Agrega un atributo genero para especificar el género literario.
+        super().__init__(nombre)
+        self.genero = genero  
+
+    def biografía(self):   # Sobrescribe el método biografía para incluir información sobre el género literario.
+        print(f"Soy {self.nombre}, un escritor especializado en {self.genero}.")
+
+# Instanciamos un objeto de la clase Escritor
+escritor1 = Escritor("Eduardo Galeano", "literatura") # Se crea un objeto escritor1 de la clase Escritor.
+
+# Accedemos al método biografía de ambas clases
+escritor1.biografía()  # Al llamar a escritor1.biografía(), se invoca la versión sobrescrita del método en Escritor.
+autor1 = Autor("Pablo Neruda")  # Creamos un objeto Autor para comparar
+autor1.biografía()  # Llama al método original en Autor
