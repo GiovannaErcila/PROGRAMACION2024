@@ -1,0 +1,25 @@
+class Libro:
+    def __init__(self, titulo, autor): # __init__: Inicializa los atributos titulo y autor.
+        self.titulo = titulo
+        self.autor = autor
+
+    def __str__(self):   # __str__: Define cómo se representa un objeto de la clase como una cadena de texto.
+        return f"Título: {self.titulo}, Autor: {self.autor}"
+
+class LibroEspecializado(Libro):  
+# Hereda de la clase Libro, lo que significa que los objetos de LibroEspecializado también tienen los atributos titulo y autor.
+# __init__: Llama al constructor de la clase base (super().__init__) para inicializar los atributos heredados y luego agrega los atributos específicos de LibroEspecializado: campo_estudio y nivel_especializacion.
+    def __init__(self, titulo, autor, campo_estudio, nivel_especializacion):
+        super().__init__(titulo, autor)
+        self.campo_estudio = campo_estudio
+        self.nivel_especializacion = nivel_especializacion
+
+    def __str__(self):
+        return f"Título: {self.titulo}, Autor: {self.autor}, Campo de estudio: {self.campo_estudio}, Nivel: {self.nivel_especializacion}"
+
+# Ejemplo de uso:
+libro_normal = Libro("Moby Dick", "Herman Melville")
+libro_especializado = LibroEspecializado("Aprendé a Programar", "Max Wainewright", "Programación", "Básico")
+
+print(libro_normal)
+print(libro_especializado)
