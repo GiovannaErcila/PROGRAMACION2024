@@ -1,0 +1,24 @@
+# Polimorfismo en objetos - tema8des4.
+
+class Musico:  # Define un método instrumento() que imprime un mensaje genérico sobre ser músico.
+    def instrumento(self):
+        print("Soy un músico y toco un instrumento.")
+
+class Guitarra(Musico):                        # Subclases Guitarra y Batería: heredan de la clase Músico. Sobrescriben el método instrumento().
+    def instrumento(self):
+        print("Soy un guitarrista y toco la guitarra.")
+
+class Bateria(Musico):
+    def instrumento(self):
+        print("Soy un baterista y toco la batería.")
+
+# Instanciamos objetos de las clases 
+musico1 = Musico()
+guitarrista1 = Guitarra()
+baterista1 = Bateria()
+
+# Demostramos el polimorfismo
+musicos = [musico1, guitarrista1, baterista1] # Creamos una lista musicos para almacenar los objetos de las diferentes clases.
+
+for musico in musicos:  # Iteramos sobre la lista y llamamos al método instrumento() para cada objeto.
+    musico.instrumento()
