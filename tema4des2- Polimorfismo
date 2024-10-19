@@ -1,0 +1,21 @@
+class Usuario:
+    def __init__(self, nombre, email):
+        self.nombre = nombre
+        self.email = email
+
+    def __str__(self):
+        return f"Usuario: {self.nombre}, Email: {self.email}"
+
+class Bibliotecario(Usuario):
+    def __init__(self, nombre, email, seccion, años_experiencia):
+        super().__init__(nombre, email)
+        self.seccion = seccion
+        self.años_experiencia = años_experiencia
+
+    def __str__(self):
+        return (f"{super().__str__()}, Sección: {self.seccion}, "
+                f"Años de experiencia: {self.años_experiencia}")
+
+# Ejemplo de uso
+bibliotecario = Bibliotecario("Giovanna Ercila", "gio.e.84@gmail.com", "Programación", 14)
+print(bibliotecario)
