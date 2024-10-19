@@ -1,0 +1,20 @@
+class Autor:
+    def __init__(self, nombre, nacionalidad):
+        self.nombre = nombre
+        self.nacionalidad = nacionalidad
+
+    def __str__(self):
+        return f"{self.nombre}, {self.nacionalidad}"
+
+class Poeta(Autor):
+    def __init__(self, nombre, nacionalidad, tipo_de_poesia):
+        super().__init__(nombre, nacionalidad)
+        self.tipo_de_poesia = tipo_de_poesia
+
+    def __str__(self):
+        return f"{super().__str__()}, Tipo de poesía: {self.tipo_de_poesia}"
+
+# Ejemplo de uso
+poeta = Poeta("Isabel Allende", "Chilena", "Poesía")
+print(poeta)
+# Se crea una instancia de Poeta y se imprime su información.
