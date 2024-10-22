@@ -1,0 +1,60 @@
+class Empleado: # Clase base que contiene atributos comunes como nombre e id_empleado, y un método mostrar_info para mostrar información básica.
+    def __init__(self, nombre, id_empleado):
+        self.nombre = nombre
+        self.id_empleado = id_empleado
+
+    def mostrar_info(self):
+        return f'Empleado: {self.nombre}, ID: {self.id_empleado}'
+
+# Clases Administrador y Mantenimiento: Clases que representan roles adicionales. Tienen métodos específicos (gestionar y reparar) que pueden ser utilizados por los empleados que las componen.
+class Administrador:
+    def __init__(self, departamento):
+        self.departamento = departamento
+
+    def gestionar(self):
+        return f'Gestionando el departamento de {self.departamento}'
+
+
+class Mantenimiento:
+    def __init__(self, area):
+        self.area = area
+
+    def reparar(self):
+        return f'Reparando en el área de {self.area}'
+
+
+class Gerente(Empleado, Administrador): # Hereda de Empleado y Administrador. 
+    def __init__(self, nombre, id_empleado, departamento):
+        Empleado.__init__(self, nombre, id_empleado)
+        Administrador.__init__(self, departamento)
+
+    def mostrar_info(self):
+        return f'{super().mostrar_info()}, {self.gestionar()}'
+
+
+class Tecnico(Empleado, Mantenimiento): # Hereda de Empleado y Mantenimiento. 
+    def __init__(self, nombre, id_empleado, area):
+        Empleado.__init__(self, nombre, id_empleado)
+        Mantenimiento.__init__(self, area)
+
+    def mostrar_info(self):
+        return f'{super().mostrar_info()}, {self.reparar()}'
+
+
+class Voluntario(Empleado): # Hereda solo de Empleado y añade un atributo para las horas de voluntariado. 
+    def __init__(self, nombre, id_empleado, horas_voluntarias):
+        super().__init__(nombre, id_empleado)
+        self.horas_voluntarias = horas_voluntarias
+
+    def mostrar_info(self):
+        return f'{super().mostrar_info()}, Horas de voluntariado: {self.horas_voluntarias}'
+
+
+# Ejemplo de uso
+gerente = Gerente("Giovanna Ercila", 1, "Administración")
+tecnico = Tecnico("Virginia Goñi", 2, "Equipos Informáticos")
+voluntario = Voluntario("Carlos Mesa", 3, 30)
+
+print(gerente.mostrar_info())
+print(tecnico.mostrar_info())
+print(voluntario.mostrar_info())
