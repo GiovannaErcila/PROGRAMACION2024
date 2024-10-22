@@ -1,0 +1,37 @@
+class Escritor: # Contiene atributos básicos como nombre y nacionalidad, y un método para escribir obras.
+    def __init__(self, nombre, nacionalidad):
+        self.nombre = nombre
+        self.nacionalidad = nacionalidad
+
+    def escribir(self, obra):
+        return f'{self.nombre} ha escrito la obra: {obra}.'
+
+
+class Academico: # Incluye un atributo para el área de estudio y un método para investigar temas.
+    def __init__(self, area_estudio):
+        self.area_estudio = area_estudio
+
+    def investigar(self, tema):
+        return f'Investigando en el área de {self.area_estudio}: {tema}.'
+
+
+class EscritorAcademico(Escritor, Academico):
+# Hereda de Escritor y Academico. Utiliza super() para inicializar ambas clases base.
+# Se inicializan los atributos de Escritor y Academico en el constructor. Incluye un método para publicar artículos académicos.
+    def __init__(self, nombre, nacionalidad, area_estudio):
+        Escritor.__init__(self, nombre, nacionalidad)
+        Academico.__init__(self, area_estudio)
+
+    def publicar_articulo(self, titulo, revista):
+        return f'{self.nombre} ha publicado el artículo "{titulo}" en la revista {revista}.'
+
+# Ejemplo de uso
+escritor_academico = EscritorAcademico(
+    nombre="Gabriel García Márquez",
+    nacionalidad="Colombiana",
+    area_estudio="Realismo mágico"
+)
+
+print(escritor_academico.escribir("La hojarasca"))
+print(escritor_academico.investigar("Noticias de un secuestro"))
+print(escritor_academico.publicar_articulo("Vivir para contarla"))
