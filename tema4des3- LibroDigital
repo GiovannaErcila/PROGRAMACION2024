@@ -1,0 +1,43 @@
+class Libro:  # Base, contiene atributos básicos como título, autor y año de publicación. Incluye un método para mostrar la información.
+    def __init__(self, titulo, autor, año_publicacion):
+        self.titulo = titulo
+        self.autor = autor
+        self.año_publicacion = año_publicacion
+
+    def mostrar_info(self):
+        return f'Título: {self.titulo}, Autor: {self.autor}, Año: {self.año_publicacion}'
+
+
+class LibroDigital(Libro): # Hereda de Libro y añade atributos para el formato y el tamaño del archivo. Sobrescribe el método mostrar_info para incluir información digital.
+    def __init__(self, titulo, autor, año_publicacion, formato, tamaño_archivo):
+        super().__init__(titulo, autor, año_publicacion)
+        self.formato = formato
+        self.tamaño_archivo = tamaño_archivo
+
+    def mostrar_info(self):
+        info_libro = super().mostrar_info()
+        return f'{info_libro}, Formato: {self.formato}, Tamaño del archivo: {self.tamaño_archivo} MB'
+
+
+class EBook(LibroDigital):  # Hereda de LibroDigital y añade un atributo para los enlaces de descarga. Sobrescribe nuevamente el método mostrar_info para incluir estos enlaces.
+    def __init__(self, titulo, autor, año_publicacion, formato, tamaño_archivo, enlaces_descarga):
+        super().__init__(titulo, autor, año_publicacion, formato, tamaño_archivo)
+        self.enlaces_descarga = enlaces_descarga
+
+    def mostrar_info(self):
+        info_libro_digital = super().mostrar_info()
+        enlaces = ', '.join(self.enlaces_descarga)
+        return f'{info_libro_digital}, Enlaces de descarga: {enlaces}'
+
+
+# Ejemplo de uso
+ebook = EBook(
+    titulo="Informática Básica para Todos",
+    autor="Jorge Lira Camargo",
+    año_publicacion=2021,
+    formato="PDF",
+    tamaño_archivo=981,
+    enlaces_descarga=["https://dialnet.unirioja.es/descarga/libro/851136.pdf"]
+)
+
+print(ebook.mostrar_info())
