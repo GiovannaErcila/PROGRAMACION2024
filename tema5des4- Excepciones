@@ -1,0 +1,34 @@
+import math
+
+# Definición de la excepción personalizada.
+class NegativeNumberError(Exception):
+# Excepción personalizada para números negativos.
+    pass
+
+def calcular_raiz_cuadrada(numero):
+    try:
+        # Verificar si el número es negativo
+        if numero < 0:
+            raise NegativeNumberError("No se puede calcular la raíz cuadrada de un número negativo.")
+        
+        # Calcular la raíz cuadrada: Verifica si el número es negativo. Si es así, lanza la excepción NegativeNumberError.
+        resultado = math.sqrt(numero) # Si el número es válido, calcula la raíz cuadrada utilizando math.sqrt.
+        return resultado
+
+    except NegativeNumberError as nne: # Muestra un mensaje específico.
+        print(f"Error: {nne}")
+    except ValueError: # maneja entradas que no son números válidos.
+        print("Error: Ingresa un número válido.")
+    except Exception as e: # captura cualquier otro error inesperado.
+        print(f"Ocurrió un error inesperado: {e}")
+
+# Ejemplo de uso
+try:
+    numero_usuario = float(input("Ingresa un número para calcular su raíz cuadrada: "))
+    raiz = calcular_raiz_cuadrada(numero_usuario)
+
+    if raiz is not None:
+        print(f"La raíz cuadrada de {numero_usuario} es: {raiz}")
+
+except ValueError:
+    print("Error: Ingresa un número válido.")
