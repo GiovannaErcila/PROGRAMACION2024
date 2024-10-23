@@ -1,0 +1,48 @@
+class Nodo:
+    # Clase para representar un nodo en el árbol binario.
+    def __init__(self, valor):
+        self.valor = valor
+        self.izquierdo = None
+        self.derecho = None
+# Clase para representar el árbol binario.
+class ArbolBinario:
+    def __init__(self):
+        self.raiz = None
+ # Agrega un valor al árbol binario.
+    def agregar(self, valor):
+        if self.raiz is None:
+            self.raiz = Nodo(valor)
+        else:
+            self._agregar_recursivo(self.raiz, valor)
+# Método auxiliar que coloca el nuevo valor en la posición correcta, de acuerdo con las propiedades del árbol binario (valores menores a la izquierda, valores mayores a la derecha).
+    def _agregar_recursivo(self, nodo, valor):
+        if valor < nodo.valor:
+            if nodo.izquierdo is None:
+                nodo.izquierdo = Nodo(valor)
+            else:
+                self._agregar_recursivo(nodo.izquierdo, valor)
+        else:
+            if nodo.derecho is None:
+                nodo.derecho = Nodo(valor)
+            else:
+                self._agregar_recursivo(nodo.derecho, valor)
+
+    def recorrido_preorden(self, nodo):
+    # Imprime los valores de los nodos en preorden (visita el nodo, luego el subárbol izquierdo y finalmente el subárbol derecho).
+        if nodo is not None:
+            print(nodo.valor, end=' ')  # Imprimir el valor del nodo
+            self.recorrido_preorden(nodo.izquierdo)  # Recorrer izquierdo
+            self.recorrido_preorden(nodo.derecho)    # Recorrer derecho
+# Crear el árbol binario
+arbol = ArbolBinario()
+arbol.agregar(14)   # Raíz
+arbol.agregar(3)    # Nivel 1
+arbol.agregar(18)   # Nivel 1
+arbol.agregar(32)    # Nivel 2
+arbol.agregar(8)    # Nivel 2
+arbol.agregar(12)   # Nivel 2
+arbol.agregar(18)   # Nivel 2
+
+# Imprimir los valores en recorrido preorden
+print("Valores en recorrido preorden:")
+arbol.recorrido_preorden(arbol.raiz)
