@@ -1,0 +1,19 @@
+def solicitar_numeros(): # Esta función contiene un bucle que continuará pidiendo entrada hasta que se ingresen dos números enteros válidos.
+    while True:
+        try:
+            # Solicitar los números al usuario
+            num1 = int(input("Ingresa el primer número entero: "))
+            num2 = int(input("Ingresa el segundo número entero: "))
+            
+            # Intentar realizar la división
+            resultado = num1 / num2
+            print(f"El resultado de {num1} dividido por {num2} es: {resultado}")
+            break  # Salir del bucle si la operación fue exitosa
+            
+        except ValueError: # Captura el error si el usuario ingresa un valor que no se puede convertir a entero.
+            print("Error: Por favor, ingresa solo números enteros.")
+        except ZeroDivisionError: # Captura el error si se intenta dividir entre cero.
+            print("Error: No se puede dividir entre cero. Por favor, ingresa un segundo número diferente de cero.")
+# Los mensajes de error muestran mensajes claros que indican al usuario qué está mal con su entrada.
+# Llamar a la función
+solicitar_numeros()
