@@ -1,0 +1,31 @@
+def operaciones_matematicas(lista): # Esta función toma una lista y realiza varias operaciones matemáticas.
+    try:
+        # Todos los elementos sean números (int o float)
+        for valor in lista:
+            if not isinstance(valor, (int, float)):
+                raise TypeError("Todos los elementos de la lista deben ser números (int o float).")
+
+        # Calcular la suma
+        suma = sum(lista)
+        print(f"La suma de los valores es: {suma}")
+
+        # Calcular la media, dividiendo la suma por el número de elementos.
+        media = suma / len(lista)
+        print(f"La media de los valores es: {media}")
+
+        # Intentar dividir el primer elemento por el segundo
+        if len(lista) < 2:
+            raise ValueError("Se requieren al menos dos valores para realizar la división.")
+        
+        division = lista[0] / lista[1]
+        print(f"La división del primer valor por el segundo es: {division}")
+
+    except ZeroDivisionError: # Captura intentos de dividir entre cero.
+        print("Error: No se puede dividir entre cero.")
+    except TypeError as te: # Captura errores si la lista contiene elementos no numéricos.
+        print(f"Error: {te}")
+    except ValueError as ve: # Captura errores relacionados con el tamaño de la lista.
+        print(f"Error: {ve}")
+    except Exception as e: # Captura cualquier otro error inesperado.
+        print(f"Ocurrió un error inesperado: {e}")
+
