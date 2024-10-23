@@ -1,0 +1,28 @@
+import math # Se importa el módulo math para utilizar la función math.factorial.
+def calcular_factorial(n):
+    try:
+        # Verificar si el número es un entero
+        if not isinstance(n, int):
+            raise TypeError("El número debe ser un entero.")
+        
+        # Verificar si el número es negativo
+        if n < 0:
+            raise ValueError("El número debe ser positivo.")
+        
+        # Calcular el factorial
+        resultado = math.factorial(n)
+        return resultado
+
+    except ValueError as ve: # Captura el error si el número es negativo.
+        print(f"Error: {ve}")
+    except TypeError as te: # Captura el error si el número no es un entero.
+        print(f"Error: {te}")
+    except OverflowError: # Captura el error si el número es demasiado grande para calcular su factorial.
+        print("Error: El número es demasiado grande para calcular su factorial.")
+    except Exception as e: # Captura cualquier otro error inesperado.
+        print(f"Ocurrió un error inesperado: {e}")
+
+
+
+if factorial_resultado is not None:
+    print(f"El factorial de {numero} es: {factorial_resultado}")
