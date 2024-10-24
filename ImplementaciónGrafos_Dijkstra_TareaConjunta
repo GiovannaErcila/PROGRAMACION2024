@@ -1,0 +1,150 @@
+# Importación de Bibliotecas.
+
+import numpy as np  # Se utiliza para crear y manejar matrices (matriz de adyacencia).
+import heapq # Implementa una cola de prioridad, que es esencial para el algoritmo de Dijkstra.
+import matplotlib.pyplot as plt # Se utiliza para la visualización gráfica del grafo.
+
+# Definición de la clase Grafo.
+# init: Constructor de la clase Grafo. Inicializa la lista de nodos y una matriz de adyacencia de tamaño n x n, donde n es el número de nodos.
+class Grafo:
+    def __init__(self, nodos): 
+        self.nodos = nodos  # Lista de nodos (ciudades)
+        self.matriz_adyacencia = np.zeros((len(nodos), len(nodos)))  # Matriz de adyacencia inicializada a 0
+
+# Método para agregar aristas. Método que establece una conexión (arista) entre dos nodos en la matriz de adyacencia, representando el peso (costo) de la arista.
+    def agregar_arista(self, inicio, fin, peso):
+        # Agrega una arista al grafo dirigido. 
+        self.matriz_adyacencia[inicio][fin] = peso  # Solo se agrega en una dirección
+
+    def mostrar_matriz(self):
+        # Muestra la matriz de adyacencia. Método que imprime la matriz de adyacencia en la consola, permitiendo visualizar las conexiones y pesos entre nodos.
+        print("Matriz de Adyacencia:")
+        print(self.matriz_adyacencia)
+
+# Implementación del Algoritmo de Dijkstra.
+    def dijkstra(self, inicio, final):
+        # Implementa el algoritmo de Dijkstra para encontrar el camino más corto.
+# distancias: Diccionario que almacena la distancia mínima desde el nodo de inicio a cada nodo, inicializado a infinito.
+# previo: Diccionario que almacena el nodo anterior en el camino más corto.
+# cola_prioridad: Se inicializa con el nodo de inicio y su distancia.
+# Inicialización
+        distancias = {nodo: float('inf') for nodo in range(len(self.nodos))}
+        distancias[inicio] = 0
+        previo = {nodo: None for nodo in range(len(self.nodos))}
+        cola_prioridad = [(0, inicio)]
+# Bucle principal. Se extrae el nodo con la menor distancia actual. Si esta distancia es mayor que la almacenada, se ignora.
+        while cola_prioridad:
+            dist_actual, nodo_actual = heapq.heappop(cola_prioridad)
+
+            if dist_actual > distancias[nodo_actual]:
+                continue
+# Actualización de distancias. 
+# Para cada vecino del nodo actual, se calcula la nueva distancia. Si es menor que la almacenada, se actualiza y se agrega el vecino a la cola de prioridad.
+            for vecino, peso in enumerate(self.matriz_adyacencia[nodo_actual]):
+                if peso != 0:  # Solo procesar si hay una conexión
+                    distancia = dist_actual + peso
+                    if distancia < distancias[vecino]:
+                        distancias[vecino] = distancia
+                        previo[vecino] = nodo_actual
+                        heapq.heappush(cola_prioridad, (distancia, vecino))
+
+        # Reconstrucción del camino. Se reconstruye el camino desde el nodo final hasta el nodo inicial usando el diccionario previo.
+        camino = []
+        actual = final
+        while actual is not None:
+            camino.append(self.nodos[actual])
+            actual = previo[actual]
+
+        camino.reverse()  # Invertir el camino para que esté en el orden correcto
+
+        # Verificar si se encontró un camino.
+        if distancias[final] == float('inf'):
+            return [], None  # No hay camino
+
+        return camino, distancias[final]  # Retornar el camino y la distancia total
+
+    def visualizar_grafo(self):
+        # Visualiza el grafo utilizando matplotlib en forma circular.
+        plt.figure(figsize=(12, 8))
+        plt.title("Grafo Dirigido de Ciudades")
+
+        # Posicionamiento circular. Crear un arreglo de ángulos para los nodos en posición circular
+        num_nodos = len(self.nodos)
+        angulos = np.linspace(0, 2 * np.pi, num_nodos, endpoint=False).tolist()
+
+        # Cálculo de las posiciones x e y
+        x = [np.cos(angulo) for angulo in angulos]
+        y = [np.sin(angulo) for angulo in angulos]
+
+        # Dibujar los nodos
+        for i in range(num_nodos):
+            plt.scatter(x[i], y[i], s=1000, label=self.nodos[i])  # Tamaño de los nodos
+# Se dibujan los nodos como puntos y las aristas como flechas que indican la dirección.
+        # Dibujar las aristas
+        for i in range(num_nodos):
+            for j in range(num_nodos):
+                if self.matriz_adyacencia[i][j] != 0:
+                    plt.arrow(x[i], y[i], x[j] - x[i], y[j] - y[i], 
+                              head_width=0.05, head_length=0.1, fc='k', ec='k')
+
+        # Añadir etiquetas para los nodos. Se añaden etiquetas a los nodos, se ajusta la visualización y se muestra el grafo.
+        for i in range(num_nodos):
+            plt.text(x[i], y[i], self.nodos[i], ha='center', va='center', fontsize=10)
+
+        plt.axis('equal')  # Mantener la proporción
+        plt.grid()
+        plt.tight_layout()
+        plt.show()
+
+# Definición de nodos. Se definen los nodos del grafo y se crea una instancia de la clase Grafo.
+nodos = [
+    'Artigas', 'Canelones', 'Colonia', 'Durazno', 'Florida',
+    'Fray Bentos', 'Maldonado', 'San José', 'Atlántida', 
+    'Montevideo', 'Paysandú', 'Rocha', 'Salto', 'Tacuarembó', 
+    'Treinta y Tres'
+]
+
+# Crear el grafo
+grafo = Grafo(nodos)
+
+# Agregar aristas (grafo dirigido) según la matriz proporcionada. Se agregan aristas entre los nodos con sus respectivos pesos.
+grafo.agregar_arista(0, 1, 5)   # Artigas -> Canelones
+grafo.agregar_arista(1, 2, 2)   # Canelones -> Colonia
+grafo.agregar_arista(2, 3, 4)   # Colonia -> Durazno
+grafo.agregar_arista(3, 4, 3)   # Durazno -> Florida
+grafo.agregar_arista(4, 5, 6)   # Florida -> Fray Bentos
+grafo.agregar_arista(1, 7, 10)  # Canelones -> San José
+grafo.agregar_arista(7, 6, 8)   # San José -> Maldonado
+grafo.agregar_arista(6, 8, 7)   # Maldonado -> Atlántida
+grafo.agregar_arista(1, 9, 15)  # Canelones -> Montevideo
+grafo.agregar_arista(9, 8, 3)   # Montevideo -> Atlántida
+grafo.agregar_arista(0, 10, 20) # Artigas -> Paysandú
+grafo.agregar_arista(10, 9, 5)  # Paysandú -> Montevideo
+grafo.agregar_arista(2, 11, 12) # Colonia -> Fray Bentos
+grafo.agregar_arista(5, 12, 10) # Fray Bentos -> Rocha
+grafo.agregar_arista(12, 9, 30) # Rocha -> Montevideo
+grafo.agregar_arista(4, 13, 8)  # Florida -> Salto
+grafo.agregar_arista(13, 10, 12) # Salto -> Paysandú
+grafo.agregar_arista(1, 14, 25) # Canelones -> Tacuarembó
+grafo.agregar_arista(14, 9, 18) # Tacuarembó -> Montevideo
+grafo.agregar_arista(3, 14, 10) # Durazno -> Treinta y Tres
+grafo.agregar_arista(14, 9, 20) # Treinta y Tres -> Montevideo
+
+# Mostrar la matriz de adyacencia. Se muestra la matriz de adyacencia y se llama al algoritmo de Dijkstra para encontrar el camino más corto.
+
+grafo.mostrar_matriz()
+
+# Llamar al algoritmo de Dijkstra
+inicio = nodos.index('Artigas')
+final = nodos.index('Atlántida')
+camino, costo_total = grafo.dijkstra(inicio, final)
+
+# Imprimir resultados mostrando el camino más corto y su costo.
+if camino:
+    print(f"La ruta más corta entre {nodos[inicio]} y {nodos[final]} es: {' -> '.join(camino)}")
+    print(f"El costo total del camino es: {costo_total}")
+else:
+    print("No se encontró un camino entre las ciudades.")
+
+# Visualizar el grafo, se llama al método para visualizar el grafo.
+grafo.visualizar_grafo()
