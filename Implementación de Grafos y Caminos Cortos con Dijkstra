@@ -1,0 +1,181 @@
+import numpy as np
+import heapq # Biblioteca estándar en Python. Se utiliza para mantener una cola de prioridad, es útil para este algoritmo de Dijkstra.
+import matplotlib.pyplot as plt  # Biblioteca de Python para la creación de gráficos y visualizaciones.
+# Grafo Dirigido. Se agregan nodos, aristas, se visualiza la matriz de adyacencia, se aplica el Algoritmo de Dijkstra y su costo. 
+# Definir los nodos (ciudades)
+nodos = ['Artigas', 'Canelones', 'Colonia', 'Durazno', 'Florida', 'Fray Bentos', 
+         'Maldonado', 'San José', 'Atlántida', 'Montevideo', 'Paysandú', 'Rivera', 
+         'Rocha', 'Salto', 'Tacuarembó', 'Treinta y Tres']
+
+# Crear la matriz de adyacencia para un grafo dirigido
+matriz_adyacencia = np.zeros((len(nodos), len(nodos)))
+# np.zeros(shape): Esta función crea un arreglo de la forma especificada, llenándolo con ceros. En este caso, se está creando una matriz cuadrada.
+# len(nodos): Esta función devuelve el número de elementos (ciudades) en la lista nodos. La matriz tendrá dimensiones n x n, donde n es el número de nodos.
+
+# Añadir conexiones (aristas) entre las ciudades
+matriz_adyacencia[0][1] = 5   # Artigas -> Canelones
+matriz_adyacencia[1][2] = 2   # Canelones -> Colonia
+matriz_adyacencia[2][3] = 4   # Colonia -> Durazno
+matriz_adyacencia[3][4] = 3   # Durazno -> Florida
+matriz_adyacencia[4][5] = 6   # Florida -> Fray Bentos
+matriz_adyacencia[1][7] = 10  # Canelones -> San José
+matriz_adyacencia[7][6] = 8   # San José -> Maldonado
+matriz_adyacencia[6][8] = 7   # Maldonado -> Atlántida
+matriz_adyacencia[1][9] = 15  # Canelones -> Montevideo
+matriz_adyacencia[9][8] = 3   # Montevideo -> Atlántida
+matriz_adyacencia[0][10] = 20 # Artigas -> Paysandú
+matriz_adyacencia[10][9] = 5  # Paysandú -> Montevideo
+matriz_adyacencia[2][11] = 12 # Colonia -> Fray Bentos
+matriz_adyacencia[5][12] = 10 # Fray Bentos -> Rocha
+matriz_adyacencia[12][9] = 30 # Rocha -> Montevideo
+matriz_adyacencia[4][13] = 8  # Florida -> Salto
+matriz_adyacencia[13][10] = 12 # Salto -> Paysandú
+matriz_adyacencia[10][9] = 4  # Paysandú -> Montevideo
+matriz_adyacencia[1][14] = 25 # Canelones -> Tacuarembó
+matriz_adyacencia[14][9] = 18 # Tacuarembó -> Montevideo
+matriz_adyacencia[3][15] = 10 # Durazno -> Treinta y Tres
+matriz_adyacencia[15][9] = 20 # Treinta y Tres -> Montevideo
+
+# Función para visualizar la matriz de adyacencia
+def imprimir_matriz(matriz, nodos): # Además de mostrar la matriz de adyacencia, muestra los nodos correspondientes a cada fila y columna.
+    print("Matriz de Adyacencia:")
+    print(" " * 12 + " ".join(f"{nodo:>10}" for nodo in nodos)) 
+    for i, fila in enumerate(matriz):
+        print(f"{nodos[i]:<12} " + " ".join(f"{int(c):>10}" for c in fila))
+# " " * 12: Agrega 12 espacios en blanco al principio para alinear los encabezados de las columnas.
+# " ".join(...): Crea una cadena al unir los nombres de los nodos, con un espacio entre cada uno.
+# f"{nodo:>10}": Formatea cada nodo para que ocupe 10 espacios, alineando el texto a la derecha. Esto asegura que los nombres de los nodos se alineen correctamente en las columnas.
+# for i, fila in enumerate(matriz): Itera sobre cada fila de la matriz y su índice. i es el índice de la fila, y fila es la lista de costos de esa fila.
+# f"{nodos[i]:<12}": Imprime el nombre del nodo correspondiente a la fila actual, alineándolo a la izquierda y ocupando 12 espacios.
+# " ".join(f"{int(c):>10}" for c in fila): Crea una cadena al unir los valores de la fila, convirtiéndolos a enteros y alineándolos a la derecha en un espacio de 10 caracteres.
+
+# Función para visualizar el grafo
+def visualizar_grafo(matriz, nodos): # Dibuja los nodos y las aristas utilizando Matplotlib, las posiciones de los nodos se calculan en un círculo.
+    G = plt.figure(figsize=(12, 8))
+    ax = G.add_subplot(111)
+# plt.figure(): Esta función crea una nueva figura en la que se pueden dibujar gráficos. Una figura puede contener múltiples subgráficas (subplots).
+# figsize=(12, 8): Este argumento especifica el tamaño de la figura en pulgadas, tendrá un ancho de 12 pulgadas y una altura de 8 pulgadas.
+# G.add_subplot(111): Este método agrega un subplot a la figura. El argumento 111 indica que se creará un único subplot que ocupará toda la figura.
+# ax: Es un eje en el que se pueden dibujar gráficos, puedes personalizar el gráfico, agregar datos, títulos, etiquetas y más.
+
+
+    # Obtener las posiciones de los nodos
+    pos = {i: (np.cos(2 * np.pi * i / len(nodos)), np.sin(2 * np.pi * i / len(nodos))) for i in range(len(nodos))}
+# {i: ... for i in range(len(nodos))}: Esta es una comprensión de diccionario que itera sobre los índices de los nodos (desde 0 hasta len(nodos) - 1) y crea un diccionario llamado pos.
+# len(nodos): Devuelve el número total de nodos. Esto se utiliza para determinar cuántos nodos se van a dibujar.
+# np.cos(2 * np.pi * i / len(nodos)): Calcula la coordenada x de un nodo en un círculo. La fórmula utiliza la función coseno, que devuelve un valor entre -1 y 1. 
+# La expresión 2 * np.pi * i / len(nodos) genera un ángulo en radianes para cada nodo, distribuyéndolos uniformemente a lo largo de un círculo.
+# np.sin(2 * np.pi * i / len(nodos)): esta parte calcula la coordenada y del nodo usando la función seno.
+# pos es un diccionario donde cada clave es el índice del nodo y el valor es una tupla que representa las coordenadas (x, y) de ese nodo en un círculo.
+
+    # Dibujar los nodos
+    for i, nodo in enumerate(nodos): # iterar sobre los nodos.
+# enumerate(nodos): Esta función devuelve tanto el índice (i) como el valor del nodo (nodo) para cada elemento en la lista nodos. 
+# Esto permite acceder a la posición de cada nodo y su nombre en el mismo bucle.
+        ax.scatter(pos[i][0], pos[i][1], s=500, label=nodo) # Esta función se utiliza para dibujar puntos en el gráfico.
+# pos[i][0] y pos[i][1]: Estas son las coordenadas (x, y) del nodo, que se obtuvieron previamente mediante el cálculo de posiciones.
+# s=500: Este argumento especifica el tamaño del punto (nodo) en el gráfico. En este caso, se establece en 500, lo que hace que los nodos sean bastante grandes y visibles.
+# label=nodo: Este argumento asigna una etiqueta al punto, lo que permite que se muestre en la leyenda si se activa.
+        ax.text(pos[i][0], pos[i][1], nodo, fontsize=10, ha='center', va='center') # Agregar texto para cada nodo.
+# ax.text(): Esta función se utiliza para agregar texto en el gráfico.
+# fontsize=10: Este argumento especifica el tamaño de la fuente del texto.
+# ha='center' y va='center': Estos argumentos especifican la alineación horizontal (ha) y vertical (va) del texto, centrando el texto en relación con las coordenadas del punto.
+
+    # Dibujar las aristas
+    for i in range(len(matriz)): # iterar sobre la matriza adyacencia.
+# for i in range(len(matriz)): Itera sobre las filas de la matriz, donde i representa el índice de la fila actual.
+# for j in range(len(matriz[i])): Itera sobre las columnas de la fila actual, donde j representa el índice de la columna.
+        for j in range(len(matriz[i])):
+            if matriz[i][j] != 0: # verifica las conexiones.
+# Esta línea comprueba si hay una conexión (arista) entre el nodo i y el nodo j. Si el valor en matriz[i][j] es diferente de cero, significa que hay un costo asociado a la conexión.
+                ax.arrow(pos[i][0], pos[i][1], pos[j][0] - pos[i][0], pos[j][1] - pos[i][1],
+                         head_width=0.05, head_length=0.1, fc='black', ec='black')
+
+# ax.arrow(): Esta función dibuja una flecha (arista) en el gráfico.
+# pos[i][0], pos[i][1]: Estas son las coordenadas (x, y) del nodo de inicio (nodo i).
+# pos[j][0] - pos[i][0] y pos[j][1] - pos[i][1]: Estas expresiones calculan el desplazamiento en x e y desde el nodo i hasta el nodo j, que define la dirección de la flecha.
+# head_width=0.05 y head_length=0.1: Estos parámetros definen el ancho y la longitud de la cabeza de la flecha, respectivamente.
+# fc='black' y ec='black': Estos argumentos establecen el color de relleno (fc) y el color del borde (ec) de la flecha, en este caso, ambos son negros.
+
+    plt.title("Grafo Dirigido de Ciudades") # visualización del gráfico.
+    plt.axis('equal') # Esta línea asegura que la escala de los ejes x e y sea igual, lo que significa que una unidad en el eje x será igual a una unidad en el eje y. Esto es especialmente útil para gráficos circulares donde la proporción de los elementos es importante.
+    plt.axis('off') # Esta línea desactiva los ejes del gráfico, lo que significa que no se mostrarán las líneas de los ejes ni las etiquetas. 
+    plt.show() # Esta función muestra el gráfico en una ventana emergente. 
+
+# Implementar el algoritmo de Dijkstra
+def dijkstra(grafo, inicio, final): 
+# grafo: Se espera que este argumento sea una matriz de adyacencia que represente el grafo, donde el valor en grafo[i][j] indica el costo o peso de ir del nodo i al nodo j. Un valor de 0 o inf podría indicar que no hay conexión directa.
+# inicio: Este es el nodo desde el que se comenzará a buscar el camino más corto.
+# final: Este es el nodo al que se desea llegar.
+# Inicializar las distancias.
+    distancias = {nodo: float('inf') for nodo in range(len(grafo))}
+# distancias: Se inicializa un diccionario que almacena la distancia más corta conocida desde el nodo de inicio a cada nodo del grafo. Al principio, todas las distancias se establecen como infinito (float('inf')), lo que significa que no se ha encontrado ninguna conexión.
+    distancias[inicio] = 0 # Se establece la distancia del nodo de inicio a sí mismo como 0, ya que no hay costo al permanecer en el mismo nodo.
+# Iniciar precedentes.
+    previo = {nodo: None for nodo in range(len(grafo))}
+# previo: Este diccionario se utiliza para rastrear el nodo anterior en el camino más corto a cada nodo. Inicialmente, todos los nodos no tienen un nodo previo asignado (se establece como None).
+
+    cola_prioridad = [(0, inicio)] # se utiliza para inicializar una cola de prioridad que se empleará en el algoritmo de Dijkstra para gestionar los nodos a explorar. 
+# cola_prioridad: Este es el nombre de la variable que almacenará la cola de prioridad, que se implementa comúnmente con una lista de tuplas en Python.
+# (0, inicio): Esta tupla representa el primer elemento de la cola, donde: 0 es la distancia acumulada desde el nodo de inicio al nodo actual. El nodo de inicio tiene una distancia de 0 a sí mismo.
+inicio es el índice del nodo de inicio en el grafo. Este valor indica a qué nodo se refiere la distancia.
+
+    while cola_prioridad: # es parte del bucle principal del algoritmo de Dijkstra y se utiliza para procesar los nodos en la cola de prioridad. 
+        dist_actual, nodo_actual = heapq.heappop(cola_prioridad) 
+# heapq.heappop(cola_prioridad): Esta función extrae el nodo con la menor distancia acumulada de la cola de prioridad. 
+# dist_actual: Esta variable almacenará la distancia acumulada más corta desde el nodo de inicio hasta el nodo_actual.
+# nodo_actual: Esta variable contendrá el índice del nodo que se está procesando.
+
+        if nodo_actual == final: # Esta línea verifica si el nodo que se está procesando actualmente (nodo_actual) es el nodo destino (final). Si es así, significa que se ha encontrado el camino más corto hasta ese nodo.
+            camino = [] # Aquí se inicializa una lista vacía llamada camino, que se utilizará para almacenar el camino desde el nodo final hasta el nodo de inicio.
+            while nodo_actual is not None:  # Este bucle while se utiliza para reconstruir el camino más corto. Se sigue el rastro de los nodos desde el nodo final hacia atrás, usando el diccionario previo que almacena el nodo anterior para cada nodo.
+                camino.append(nodos[nodo_actual]) # Agrega el nodo actual a la lista camino. Aquí nodos[nodo_actual] asume que nodos es una lista que contiene los nombres o identificadores de los nodos.
+                nodo_actual = previo[nodo_actual] #  Actualiza nodo_actual al nodo anterior en el camino.
+# Devolver el camino y la distancia.
+            return camino[::-1], distancias[final]
+# camino[::-1]: Esta expresión invierte la lista camino, ya que se ha construido desde el nodo final hacia el nodo de inicio. El uso del slicing [::-1] es una forma rápida de invertir la lista en Python.
+# distancias[final]: También se devuelve la distancia total desde el nodo de inicio hasta el nodo final, que se almacenó en el diccionario distancias.
+
+
+        if dist_actual > distancias[nodo_actual]:
+            continue
+# dist_actual: Esta variable contiene la distancia acumulada más corta conocida desde el nodo de inicio hasta el nodo_actual en el momento en que se está procesando.
+# distancias[nodo_actual]: Este valor es la mejor distancia conocida hasta el momento desde el nodo de inicio hasta el nodo_actual, que se almacena en el diccionario distancias.
+# continuar si la distancia es mayor: Si la distancia_actual es mayor que la mejor distancia conocida hasta ese momento (distancias[nodo_actual]), significa que ya se ha encontrado un camino más corto hacia ese nodo, no tiene sentido procesar este nodo en este momento. 
+# La instrucción continue provoca que el bucle while salte a la siguiente iteración, omitiendo el resto del código para el nodo actual.
+
+# Actualizar las distancias a los nodos vecinos.
+        for vecino, peso in enumerate(grafo[nodo_actual]):
+# enumerate(grafo[nodo_actual]): Esta función itera sobre la lista de pesos de las conexiones del nodo_actual. vecino es el índice del nodo vecino, y peso es el peso de la arista que conecta el nodo_actual con ese vecino.
+# grafo[nodo_actual] proporciona la fila correspondiente al nodo_actual en la matriz de adyacencia, donde cada entrada indica el peso de la conexión a otro nodo (0 si no hay conexión).
+
+      if peso != 0: # Esta línea comprueba si hay una conexión entre el nodo_actual y el vecino. Un peso de 0 indica que no hay conexión directa, por lo que solo se procesan aquellos vecinos que están conectados.
+                distancia = dist_actual + peso  # Aquí se calcula la distancia total al vecino sumando la distancia_actual (dist_actual) y el peso de la arista a este vecino (peso). Esta es la nueva distancia que se considera para ese nodo.
+                if distancia < distancias[vecino]: # Esta verificación determina si la nueva distancia calculada es menor que la distancia conocida previamente al vecino. Si es menor, se actualiza.
+                    distancias[vecino] = distancia # Se actualiza la distancia más corta conocida al vecino.
+                    previo[vecino] = nodo_actual # Se establece el nodo_actual como el nodo anterior al vecino, lo que ayudará a reconstruir el camino más tarde.
+                    heapq.heappush(cola_prioridad, (distancia, vecino)) # Se añade el vecino a la cola de prioridad con su nueva distancia. Esto permite que el algoritmo lo procese en el futuro, manteniendo la eficiencia del manejo de nodos.
+
+    return None, float('inf')
+# return None: Este valor indica que no se ha encontrado un camino desde el nodo de inicio hasta el nodo final. None es un valor comúnmente utilizado en Python para representar la ausencia de un valor.
+# float('inf'): Este valor representa la distancia infinita. En el contexto del algoritmo, esto se utiliza para indicar que no hay un costo asociado al camino, ya que no se puede llegar al nodo final desde el nodo de inicio.
+
+
+# Imprimir la matriz de adyacencia
+imprimir_matriz(matriz_adyacencia, nodos)
+
+# Visualizar el grafo
+visualizar_grafo(matriz_adyacencia, nodos)
+
+# Ejecutar el algoritmo de Dijkstra desde Artigas hasta Atlántidda.
+inicio = nodos.index('Artigas') # Esta llamada a index() busca el nodo 'Artigas' en la lista y devuelve su índice. Este índice se almacenará en la variable inicio.
+final = nodos.index('Atlántida') # Se busca el índice del nodo 'Atlántida' y se almacena en la variable final.
+camino, costo_total = dijkstra(matriz_adyacencia, inicio, final)
+
+if camino: # Esta línea verifica si la variable camino contiene algún valor. Si camino no es None o una lista vacía, significa que se ha encontrado un camino válido entre los nodos.
+    print(f"La ruta más corta entre Artigas y Atlántida es: {' -> '.join(camino)}") 
+# Esta es una f-string que permite insertar variables directamente en la cadena de texto.
+# ' -> '.join(camino): Este método une los elementos de la lista camino en una única cadena, separando cada elemento por " -> ". Esto proporciona una representación visual clara del camino encontrado.
+    print(f"El costo total del camino es: {costo_total}") # Esta línea imprime el costo total del camino encontrado, que se almacenó en la variable costo_total.
+else:
+    print("No se encontró un camino entre las ciudades.") # Si camino no contiene un valor válido (es decir, si es None o una lista vacía), se imprime un mensaje indicando que no se encontró un camino entre "Artigas" y "Atlántida".
