@@ -1,0 +1,61 @@
+# Representa un nodo en el árbol de expresiones, con un valor y punteros a nodos izquierdo y derecho.
+class Nodo: 
+    def __init__(self, valor): # Inicializa un nuevo nodo con un valor dado y establece los hijos como None.
+        self.valor = valor # Almacena el valor del nodo, que puede ser un número o un operador.
+        self.izquierdo = None # subárbol izquierdo.
+        self.derecho = None # subárbol derecho. 
+
+def construir_arbol(expresion): # Esta función toma una cadena de expresión matemática y construye un árbol de expresiones.
+    # Se divide la expresión en tokens (números y operadores) usando split().
+    tokens = expresion.split()
+    # Usar una pila para los operandos y otra para los operadores
+    operandos = []
+    operadores = []
+
+    # Definir precedencia de los operadores
+    precedencia = {'+': 1, '-': 1, '*': 2, '/': 2}
+
+# Esta función auxiliar se encarga de aplicar un operador y construir un nodo correspondiente.
+# Funcionamiento: Se saca el operador de la pila de operadores. Se sacan los dos últimos nodos de la pila de operandos (los hijos del nuevo nodo).Se crea un nuevo nodo con el operador y se conectan los hijos izquierdo y derecho. se añade el nuevo nodo a la pila de operandos.
+    def aplicar_operador(): 
+        operador = operadores.pop()
+        derecha = operandos.pop()
+        izquierda = operandos.pop()
+        nodo = Nodo(operador)
+        nodo.izquierdo = izquierda
+        nodo.derecho = derecha
+        operandos.append(nodo)
+
+    for token in tokens: # Este bloque recorre cada token en la expresión.
+        if token.isdigit():  # Si el token es un número
+            operandos.append(Nodo(int(token)))
+        else:  # Si el token es un operador
+            while (operadores and
+                   precedencia[operadores[-1]] >= precedencia[token]):
+                aplicar_operador()
+            operadores.append(token)
+
+    while operadores: # Al final, se aplican todos los operadores restantes en la pila.
+        aplicar_operador()
+
+    return operandos[0]  # La raíz del árbol es el último nodo en operandos
+
+def evaluar_arbol(nodo): # Evalúa el árbol de expresiones de manera recursiva.
+    if nodo.izquierdo is None and nodo.derecho is None:
+        return nodo.valor  # Es un número
+    izquierda = evaluar_arbol(nodo.izquierdo)
+    derecha = evaluar_arbol(nodo.derecho)
+    if nodo.valor == '+':
+        return izquierda + derecha
+    elif nodo.valor == '-':
+        return izquierda - derecha
+    elif nodo.valor == '*':
+        return izquierda * derecha
+    elif nodo.valor == '/':
+        return izquierda // derecha  # División entera
+
+# Probar el programa con la expresión "5 + 3 * 4"
+expresion = "5 + 3 * 4"
+arbol_expresion = construir_arbol(expresion)
+resultado = evaluar_arbol(arbol_expresion)
+print(f"El resultado de la expresión '{expresion}' es: {resultado}")
