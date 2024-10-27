@@ -1,0 +1,51 @@
+class Nodo: # Define la estructura de un nodo en el árbol, que tiene un valor y punteros a los nodos izquierdo y derecho.
+    def __init__(self, valor):
+        self.valor = valor
+        self.izquierdo = None
+        self.derecho = None
+
+class ArbolBusquedaBinaria: # Incluye métodos para insertar nodos y buscar valores en el árbol.
+    def __init__(self):
+        self.raiz = None
+
+    def insertar(self, valor): # Método insertar: Inserta un nuevo valor en el árbol, si el árbol está vacío, se establece el nodo raíz, si no, se llama a un método recursivo para encontrar la posición correcta.
+        if self.raiz is None:
+            self.raiz = Nodo(valor)
+        else:
+            self._insertar_recursivo(self.raiz, valor)
+
+    def _insertar_recursivo(self, nodo, valor): # Llama recursivamente para insertar el valor en el subárbol izquierdo o derecho según corresponda.
+        if valor < nodo.valor:
+            if nodo.izquierdo is None:
+                nodo.izquierdo = Nodo(valor)
+            else:
+                self._insertar_recursivo(nodo.izquierdo, valor)
+        else:
+            if nodo.derecho is None:
+                nodo.derecho = Nodo(valor)
+            else:
+                self._insertar_recursivo(nodo.derecho, valor)
+
+    def buscar(self, valor): # Método buscar: Inicia la búsqueda del valor.
+        return self._buscar_recursivo(self.raiz, valor)
+
+    def _buscar_recursivo(self, nodo, valor): # Busca el valor en el árbol y devuelve True si se encuentra, o False si el nodo es None.
+        if nodo is None:
+            return False
+        if nodo.valor == valor:
+            return True
+        elif valor < nodo.valor:
+            return self._buscar_recursivo(nodo.izquierdo, valor)
+        else:
+            return self._buscar_recursivo(nodo.derecho, valor)
+
+# Crear un árbol de búsqueda binaria
+numeros = [10, 5, 15, 3, 7, 13, 20]
+abb = ArbolBusquedaBinaria()
+for numero in numeros:
+    abb.insertar(numero)
+
+# Buscar un número en el árbol
+numero_a_buscar = 5
+existe = abb.buscar(numero_a_buscar)
+print(f"El número {numero_a_buscar} {'existe' if existe else 'no existe'} en el árbol.")
