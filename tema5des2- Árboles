@@ -1,0 +1,22 @@
+class Nodo: # Define la estructura de un nodo en el árbol binario. Cada nodo tiene un valor (valor), un puntero al hijo izquierdo (izquierdo) y un puntero al hijo derecho (derecho).
+    def __init__(self, valor):
+        self.valor = valor
+        self.izquierdo = None
+        self.derecho = None
+
+def suma_inorden(nodo): # Esta función realiza un recorrido en inorden del árbol.
+    if nodo is None: # Condición: Si el nodo es None, devuelve 0.
+        return 0
+    return suma_inorden(nodo.izquierdo) + nodo.valor + suma_inorden(nodo.derecho) # Llama a sí misma para el subárbol izquierdo, suma el valor del nodo actual y luego llama a sí misma para el subárbol derecho.
+
+# Crear un árbol binario, con varios nodos. Se establece la raíz y se conectan los nodos izquierdo y derecho.
+raiz = Nodo(10)
+raiz.izquierdo = Nodo(5)
+raiz.derecho = Nodo(15)
+raiz.izquierdo.izquierdo = Nodo(3)
+raiz.izquierdo.derecho = Nodo(7)
+raiz.derecho.derecho = Nodo(20)
+
+# Calcular la suma de los valores en inorden, se llama a la función suma_inorden pasando la raíz del árbol.
+resultado = suma_inorden(raiz)
+print(f"La suma de todos los valores en el árbol es: {resultado}")
