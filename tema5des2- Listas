@@ -1,0 +1,15 @@
+# Lista de códigos.
+codigos_productos = ["P001", "POO2", "P003", "P004", "P005", "X001", "X002", "X003", "X004", "X005"]
+
+# Solicitar al usuario que ingrese un código de producto.
+codigo_buscado = input("Escriba el código del producto: ")
+
+# Verificar si el código está en la lista.
+if codigo_buscado in codigos_productos:
+    posicion = codigos_productos.index(codigo_buscado) # index para saber la posición del código.
+    print(f"El código '{codigo_buscado}' se encuentra en la posición: {posicion}")
+else:
+    print(f"El código '{codigo_buscado}' no se ha encontrado en la lista.")
+
+
+Link al ejercicio: https://www.online-python.com/TFC9UoMfrK 
