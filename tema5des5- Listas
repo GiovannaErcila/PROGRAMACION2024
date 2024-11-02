@@ -1,0 +1,8 @@
+# Crear la lista de potencias de dos (usando list comprehension).
+# Se utiliza la sintaxis [2 ** i for i in range(10)] para generar los elementos de la lista. 
+# 2 ** i calcula 2 elevado a la potencia de i, donde i toma valores del 0 al 9.
+
+potencias = [2 ** i for i in range(10)]
+
+# Imprimir la lista resultante.
+print("Potencias de dos de 0 a 9:", potencias)
