@@ -1,0 +1,32 @@
+# se solicita al usuario 3 números enteros.
+try:
+    num1 = int(input("Introduce el primer número entero: "))
+    num2 = int(input("Introduce el segundo número entero: "))
+    num3 = int(input("Introduce el tercer número entero: "))
+
+    # Determinación si todos los números son iguales
+    if num1 == num2 == num3:
+        print("Todos los números son iguales.")
+    else:
+        # Crear una lista de los números para facilitar la comparación
+        numeros = [num1, num2, num3]
+        
+        # Encontrar el número mayor, max.
+        mayor = max(numeros)
+        
+        # Verifica cuántos números son iguales al mayor
+        iguales_al_mayor = [num for num in numeros if num == mayor]
+        
+        # Mensaje sobre los números mayores
+        if len(iguales_al_mayor) == 1:
+            print(f"El número mayor es: {mayor}")
+        else:
+            print(f"Los números mayores son: {', '.join(map(str, iguales_al_mayor))}")
+
+except ValueError:
+    print("Por favor, introduce solo números enteros.")
+
+
+
+
+Link a Online Python https://www.online-python.com/fMdTveVFLg 
