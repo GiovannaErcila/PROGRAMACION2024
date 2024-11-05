@@ -1,0 +1,65 @@
+# La función busqueda_binaria toma los parámetros una lista de estudiantes y el nombre que se desea buscar.
+# Inicializa dos variables (izquierda y derecha), rango en que se busca.
+# Bucle while: que continúa mientras izquierda sea menor o igual a derecha.
+# Calcula el índice medio (medio) y compara el estudiante en esa posición con el nombre_buscado.
+# Si son iguales, devuelve un mensaje indicando la posición, si el estudiante medio es menor que el nombre buscado, ajusta el límite izquierdo para buscar en la mitad superior.
+# Si es mayor, ajusta el límite derecho para buscar en la mitad inferior.
+# Si el bucle termina sin encontrar el nombre, devuelve un mensaje indicando que no se encontró.
+
+
+def busqueda_binaria(lista_estudiantes, nombre_buscado):
+    izquierda = 0
+    derecha = len(lista_estudiantes) - 1
+
+    while izquierda <= derecha:
+        medio = (izquierda + derecha) // 2
+        estudiante_medio = lista_estudiantes[medio]
+
+        if estudiante_medio == nombre_buscado:
+            return f"Estudiante '{nombre_buscado}' encontrado en la posición {medio}."
+        elif estudiante_medio < nombre_buscado:
+            izquierda = medio + 1
+        else:
+            derecha = medio - 1
+
+    return f"Estudiante '{nombre_buscado}' no encontrado en la lista."
+
+
+# Lista ordenada alfabéticamente.
+lista_estudiantes = [
+    "Andrea",
+    "Belén",
+    "Chiara",
+    "Dinora",
+    "Evelyn",
+    "Francisco",
+    "Graciela",
+    "Helena",
+    "Iván",
+    "Jorge"
+    "Kevin",
+    "Lucía",
+    "María",
+    "Noelia",
+    "Ofelia",
+    "Paola",
+    "Quique",
+    "Raúl",
+    "Sergio",
+    "Thiago",
+    "Ulises",
+    "Víctor",
+    "Wilson",
+    "Xavier",
+    "Yolanda",
+    "Zoe",
+]
+
+# Nombre a buscar
+nombre_buscado = "Noelia"
+
+# Llamar a la función de búsqueda
+resultado = busqueda_binaria(lista_estudiantes, nombre_buscado)
+
+# Mostrar resultado
+print(resultado)
