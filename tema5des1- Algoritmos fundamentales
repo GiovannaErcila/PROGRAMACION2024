@@ -1,0 +1,76 @@
+class Nodo: # Representa cada grado con su lista de estudiantes y sus nodos hijos.
+    def __init__(self, grado):
+        self.grado = grado
+        self.estudiantes = []
+        self.hijos = []
+
+def recorrido_por_niveles(raiz): # Realiza el recorrido en anchura. Utiliza una cola para procesar cada nodo, comenzando desde la raíz.
+    if not raiz:
+        return
+    
+    # Usamos una cola para el recorrido por niveles
+    cola = [raiz]
+    
+    resultados = []
+    
+    while cola:
+        nodo_actual = cola.pop(0)  # Sacamos el primer nodo de la cola
+        resultados.append((nodo_actual.grado, nodo_actual.estudiantes))
+        
+        # Agregamos los hijos a la cola
+        for hijo in nodo_actual.hijos:
+            cola.append(hijo)
+    
+    return resultados
+
+# Ejemplo, se crean varios nodos y se construye el árbol.
+
+# Crear nodos
+grado_12 = Nodo(12)
+grado_11 = Nodo(11)
+grado_10 = Nodo(10)
+grado_9 = Nodo(9)
+grado_8 = Nodo(8)
+grado_7 = Nodo(7)
+grado_6 = Nodo(6)
+grado_5 = Nodo(5)
+grado_4 = Nodo(4)
+grado_3 = Nodo(3)
+grado_2 = Nodo(2)
+grado_1 = Nodo(1)
+
+# Agregar estudiantes a los grupos
+grado_12.estudiantes = ["Giovanna", "José"]
+grado_11.estudiantes = ["Arturo", "David"]
+grado_10.estudiantes = ["Evelyn", "Francisco"]
+grado_9.estudiantes = ["Jesús", "Paula"]
+grado_8.estudiantes = ["Paola", "Eugenia"]
+grado_7.estudiantes = ["Josefina", "Pablo"]
+grado_6.estudiantes = ["Gisella", "María"]
+grado_5.estudiantes = ["Enrique", "Rogelio"]
+grado_4.estudiantes = ["Valeska", "Luciano"]
+grado_4.estudiantes = ["Ernesto", "Mario"]
+grado_3.estudiantes = ["Hilda", "Domingo"]
+grado2_estudiantes = ["Pedro", "Natalia"]
+grado_1.estudiantes = ["Graciela", "Jorge"]
+
+# Construir el árbol
+grado_12.hijos.append(grado_11)
+grado_11.hijos.append(grado_10)
+grado_10.hijos.append(grado_9)
+grado_9.hijos.append(grado_8)
+grado_8.hijos.append(grado_7)
+grado_7.hijos.append(grado_6)
+grado_6.hijos.append(grado_5)
+grado_5.hijos.append(grado_4)
+grado_4.hijos.append(grado_3)
+grado_3.hijos.append(grado_2)
+grado_2.hijos.append(grado_1)
+
+
+# Llamar a la función de recorrido
+resultado = recorrido_por_niveles(grado_12)
+
+# Mostrar resultados
+for grado, estudiantes in resultado:
+    print(f"Grado {grado}: {', '.join(estudiantes)}")
