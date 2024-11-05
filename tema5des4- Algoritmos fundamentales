@@ -1,0 +1,44 @@
+# La función ordenamiento por selección toma como parámetros una lista de tuplas de estudiantes. Cada tupla contiene el nombre del estudiante y su promedio de calificación.
+# La variable n almacena la longitud de la lista.
+# Se utiliza un bucle que recorre cada posición de la lista (i).
+# Para cada posición, se asume que el estudiante en la posición i es el que tiene el promedio más alto (max_index).
+# Se busca el estudiante con el promedio más alto en el resto de la lista (desde i + 1 hasta n - 1).
+# Si se encuentra un promedio más alto, se actualiza max_index.
+# Después de encontrar el estudiante con el promedio más alto, se intercambia con el estudiante en la posición i.
+
+def ordenamiento_por_seleccion(estudiantes):
+    n = len(estudiantes)
+    
+    # Recorremos toda la lista
+    for i in range(n):
+        # Suponemos que el máximo es el primer elemento no ordenado
+        max_index = i
+        
+        # Buscamos el máximo en el resto de la lista
+        for j in range(i + 1, n):
+            if estudiantes[j][1] > estudiantes[max_index][1]:  # Comparamos promedios
+                max_index = j
+        
+        # Intercambiamos el máximo encontrado con el primer elemento no ordenado
+        estudiantes[i], estudiantes[max_index] = estudiantes[max_index], estudiantes[i]
+
+
+# Lista de estudiantes con sus promedios
+estudiantes = [
+    ("Jorge", 8.5),
+    ("Ana", 9.0),
+    ("Chiara", 7.8),
+    ("Denis", 8.5),
+    ("Evelyn", 9.5),
+    ("Eugenia", 8.0)
+    ("Piero", 8.7)
+    ("Pía", 7.0)
+]
+
+# Llamar a la función de ordenamiento
+ordenamiento_por_seleccion(estudiantes)
+
+# Mostrar resultados
+print("Estudiantes ordenados por promedio (de mayor a menor):")
+for estudiante, promedio in estudiantes:
+    print(f"{estudiante}: {promedio}")
