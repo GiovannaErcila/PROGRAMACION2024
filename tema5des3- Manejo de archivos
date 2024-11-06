@@ -1,0 +1,32 @@
+import csv
+
+def actualizar_copias_libro(titulo_libro, nuevas_copias):
+    # Crear una lista para almacenar los libros actualizados
+    libros_actualizados = []
+    libro_encontrado = False
+
+    # Leer el archivo CSV
+    with open("inventario.csv", "r", newline='') as archivo:
+        lector = csv.reader(archivo)
+        for fila in lector:
+            # Comprobar si el libro actual es el que se quiere actualizar
+            if fila[0].strip().lower() == titulo_libro.strip().lower():
+                fila[1] = str(nuevas_copias)  # Actualizar la cantidad de copias
+                libro_encontrado = True
+            libros_actualizados.append(fila)
+
+    # Si el libro no fue encontrado, indica al usuario
+    if not libro_encontrado:
+        print(f"No se encontró el libro '{titulo_libro}' en el inventario.")
+        return
+
+    # Escribir los cambios de vuelta al archivo CSV
+    with open("inventario.csv", "w", newline='') as archivo:
+        escritor = csv.writer(archivo)
+        escritor.writerows(libros_actualizados)
+
+    print(f"Se actualizó la cantidad de copias de '{titulo_libro}' a {nuevas_copias}.")
+
+titulo = input("Ingresa el título del libro a actualizar: ")
+nuevas_copias = int(input("Ingresa la nueva cantidad de copias: "))
+actualizar_copias_libro(titulo, nuevas_copias)
