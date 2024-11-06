@@ -1,0 +1,10 @@
+def agregar_prestamo(nombre_libro, nombre_prestatario, fecha_prestamo):
+    # Abrir el archivo en modo append para no sobrescribirlo
+    with open("prestamos.txt", "a") as archivo:
+        # Escribir el registro en el archivo
+        archivo.write(f"{nombre_libro},{nombre_prestatario},{fecha_prestamo}\n")
+
+    print("Registro de préstamo agregado correctamente.")
+
+# Llamar a la función.
+agregar_prestamo("La felicidad", "Gabriel Rolón", "06/11/2024")
